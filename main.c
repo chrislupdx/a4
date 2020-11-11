@@ -10,12 +10,12 @@ struct argList
 
 int printmenu(struct argList list); 
 int add();
-//virtual function arry
+//virtual function array
 
 int main(int argc, char ** argv) //up to 15 args
 {
     int argCount = 1;
-
+    
     //copy the the command line args into the array args
     for(int i = 0; i < argCount; i++)
     {
@@ -24,25 +24,18 @@ int main(int argc, char ** argv) //up to 15 args
     }
     
     //update count to reflect the # of args
+    ArgList.count = argc - 1; //do we need to detangle this from argc
 
 
-    //incoming input = 32 bit ints in hex or dec
-    //hex defined as 0x
-    //all else are dec
+
 
     printmenu(ArgList);
     return 0;
 }
 
-//print the args of struct
 int printmenu(struct argList list)
 {
     printf("there are %d arguements \n", list.count);
-    
-    //for(int i = 0; i < list.count; i++)
-    //{
-    //    argList.args[i] =  
-    //}
     return 0;
 }
 
