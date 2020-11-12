@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAXARGS 15 //max command line args
+#define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else b
+
 struct argList
 {
     int count;
@@ -14,31 +16,37 @@ int add();
 
 int main(int argc, char ** argv) //up to 15 args
 {
-    int argCount = 1;
-    
-    //copy the the command line args into the array args
-    for(int i = 0; i < argCount; i++)
+    int aCount = min(argc -1, MAXARGS);
+
+    printf("aCount is %d\n", aCount);
+    if(argc == 1)
     {
-        ArgList.args[i] = malloc(strlen(argv[i] + 1));
-        strncpy(ArgList.args[i], argv[i], strlen(argv[i]+1));
+        printf("too few gtfo \n");
+        return 0;
     }
-    
-    //update count to reflect the # of args
-    ArgList.count = argc - 1; //do we need to detangle this from argc
+    argv++; //oh whoah
+    int i;
+    for(i = 0; i < aCount; i++)
+    {
+        printf("%s\n", argv[i]);
+        ArgList.args[i] = malloc(strlen(argv[i] + 1));
+        strncpy(ArgList.args[i], argv[i], strlen(argv[i])+1);
+    }
+    ArgList.count = i;
 
-
-
-
-    printmenu(ArgList);
+    //lol trying to print the args array
+    for(int i = 0; i < ArgList.count; i++) 
+    {
+        printf("arg[%d] == %s\n", i, ArgList.args[i]);    
+    }
     return 0;
 }
 
-int printmenu(struct argList list)
+int printmenu(struct argList l)
 {
-    printf("there are %d arguements \n", list.count);
+    printf("there are %d arguements \n", l.count);
     return 0;
 }
-
 int add()
 {
     printf("add\n");
