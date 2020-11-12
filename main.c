@@ -25,13 +25,21 @@ typedef struct {
 void
 add(funcParam * input)
 {
-    printf("fuck you\n");
+    printf("addd\n");
     return;
 }
 
+void subtract(funcParam * input)
+{
+    printf("IT'S subtract\n");
+    return;
+}
+
+
 dtEntry fdt[4] = 
 {
-    {"add", add}
+    {"add", add},
+    {"subtract", subtract}
 };
 int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
 
@@ -45,7 +53,9 @@ int main(int argc, char ** argv) //up to 15 args
         printf("too few gtfo \n");
         return 0;
     }
-    argv++; //oh whoah
+
+    //Load command line args into a struct
+    argv++;
     int i;
     for(i = 0; i < aCount; i++)
     {
@@ -54,10 +64,39 @@ int main(int argc, char ** argv) //up to 15 args
     }
     ArgList.count = i;
 
-    //
+    //Move the functions into fdt
+    int funcMax = 2;  //this needs to be tweaked whenver we add fucntions into fdt
+   
+    //funcParam * fList[funcMax]; 
+   
+    for(int i = 0; i < funcMax; i++)
+    {
+        fList[i] = (funcParam * )malloc(sizeof(funcParam));   //allocate  funcparam sized mem and cast it to that type
+        fList[i]->count = i;
+        fList[i]->string = add; //inject function pointer here
 
+            //(char*) malloc(strlen(fdt[i].description) + 1); 
+        
+        //strcpy((fList[i]->string), (fdt[i].description));
+        //printf("%d: %s\n",i,  fList[i]->string);
+        
+        (*fdt[i].name)(paramList[i]); 
+        free (fList[i]); //i'm assuming this is obligatory
+    }
+    
 
-    printmenu(ArgList);  //we could toss that into the fdt
+    //how do we call these
+    //fList[0];
+    //for(int b = 0; b < 2; b++)
+    //{
+    //    //print the name 
+    //    printf("%d: %s\n", b , fdt[b] );
+    //    //call the function
+    //}
+    
+    //user decision: pick a funciton
+
+    //printmenu(ArgList);  //we could toss that into the fdt
     return 0;
 }
 
