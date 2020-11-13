@@ -2,47 +2,38 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAXARGS 15 //max command line args
-#define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else b
+#define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
 
 struct argList //is this necessary?
 {
     int count;
     char * args[MAXARGS]; //they're being put in separately
+    //ok what exactly does args contain (maxargs mihgt be a red herring)
 } ArgList;
 
-typedef struct {
+typedef struct 
+{
     int count;
     char *string;
 } funcParam; //for one or is this general
 
 //do we write one for each function?
 typedef void funcPtr(funcParam *); //what args go int?
-typedef struct {
+typedef struct 
+{
     char * description;
     funcPtr * name; //this is a functin pointer
 } dtEntry;
-
-void
-add(funcParam * input)
+void add(funcParam * input)
 {
     printf("addd\n");
     return;
 }
-
-void subtract(funcParam * input)
-{
-    printf("IT'S subtract\n");
-    return;
-}
-
-
 dtEntry fdt[4] = 
 {
-    {"add", add},
-    {"subtract", subtract}
+    {"add", add}
 };
 int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
-
 int printmenu(struct argList list); 
 
 int main(int argc, char ** argv) //up to 15 args
@@ -65,44 +56,45 @@ int main(int argc, char ** argv) //up to 15 args
     ArgList.count = i;
 
     //Move the functions into fdt
-    int funcMax = 2;  //this needs to be tweaked whenver we add fucntions into fdt
-   
+    int funcMax = 1;  //this needs to be tweaked whenver we add fucntions into fdt
+
     funcParam * fList[funcMax]; 
-   
+
+    //call every function in the fdt
     for(int i = 0; i < funcMax; i++)
     {
         fList[i] = (funcParam * )malloc(sizeof(funcParam));   //allocate  funcparam sized mem and cast it to that type
         fList[i]->count = i;
-        //something is still void type and needs to be more specific!!
-        //fList[i]->string = add; //inject function pointer here
-        printf("Invoking %d: %s\n",i,  fList[i]->string);
+        printf("Invoking %d: %s\n",i, fdt[i].description);
         (*fdt[i].name)(fList[i]); 
-        free (fList[i]); //i'm assuming this is obligatory
+        free (fList[i]); 
     }
-    
 
-    //how do we call these
-    //fList[0];
-    //for(int b = 0; b < 2; b++)
-    //{
-    //    //print the name 
-    //    printf("%d: %s\n", b , fdt[b] );
-    //    //call the function
-    //}
+    //struct contains: descriptions of the functions
+    //a list number of functions
+    int count = 0;
+    for(int i = 0; i < funcMax; i++)
+    {
+        fList[i] = (funcParam * )malloc(sizeof(funcParam));
+        printf("Invoking %d: %s\n",i, fdt[i].description);
+        //increment count every time we pull in a function
+        
+        fList[i]->count = i;
+    }
+   
+    //int userchoice;
+    printmenu();
     
-    //user decision: pick a funciton
-
-    //printmenu(ArgList);  //we could toss that into the fdt
     return 0;
 }
 
-//currently just prints the struct
+//prints funciton  names and count
 int printmenu(struct argList l)
 {
-    printf("there are %d arguements \n", l.count);
-    for(int i = 0; i < ArgList.count; i++) 
-    {
-        printf("arg[%d] == %s\n", i, ArgList.args[i]);    
-    }
+    //printf("there are %d arguements \n", l.count);
+    //for(int i = 0; i < ArgList.count; i++) 
+    //{
+        //printf("arg[%d] == %s\n", i, ArgList.args[i]);    
+    //}
     return 0;
 }
