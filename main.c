@@ -37,12 +37,8 @@ typedef struct
 
 void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguement count)
 {
-    printf("count is %d\n", fp.count);
-    //for(int i =0; i < fp.count; i++)
-    //{
-    //    printf("%i : %i\n", i, fp.params[i]);
-    //}
     int sum = 0;
+    //Decimal
     for(int i = 0; i < fp.count; i++)
     {
         printf("%d", fp.params[i]);
@@ -54,12 +50,20 @@ void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguem
     }
     printf(" = %d ", sum);
     printf("\n");
-    //2 + 1 = 20
 
+    int sum1 = 0;
+    //Hex
+    for(int i = 0; i < fp.count; i++)
+    {
+        printf("0x%x", fp.params[i]);
+        if(i != (fp.count -1))
+        {
+            printf(" + ");
+        }
+        sum1 = sum1 + fp.params[i];
+    }
+    printf(" = 0x%x\n", sum1);
 
-    //just print the other one later
-    //0x1 + 0x3 = 0x3
-    printf("add end\n");
     return;
 }
 
