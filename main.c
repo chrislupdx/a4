@@ -19,7 +19,7 @@ typedef struct {
 typedef void funcPtr(funcParam *); //what args go int?
 typedef struct {
     char * description;
-    funcPtr * name;
+    funcPtr * name; //this is a functin pointer
 } dtEntry;
 
 void
@@ -67,20 +67,16 @@ int main(int argc, char ** argv) //up to 15 args
     //Move the functions into fdt
     int funcMax = 2;  //this needs to be tweaked whenver we add fucntions into fdt
    
-    //funcParam * fList[funcMax]; 
+    funcParam * fList[funcMax]; 
    
     for(int i = 0; i < funcMax; i++)
     {
         fList[i] = (funcParam * )malloc(sizeof(funcParam));   //allocate  funcparam sized mem and cast it to that type
         fList[i]->count = i;
-        fList[i]->string = add; //inject function pointer here
-
-            //(char*) malloc(strlen(fdt[i].description) + 1); 
-        
-        //strcpy((fList[i]->string), (fdt[i].description));
-        //printf("%d: %s\n",i,  fList[i]->string);
-        
-        (*fdt[i].name)(paramList[i]); 
+        //something is still void type and needs to be more specific!!
+        //fList[i]->string = add; //inject function pointer here
+        printf("Invoking %d: %s\n",i,  fList[i]->string);
+        (*fdt[i].name)(fList[i]); 
         free (fList[i]); //i'm assuming this is obligatory
     }
     
