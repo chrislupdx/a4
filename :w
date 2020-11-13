@@ -56,30 +56,31 @@ int main(int argc, char ** argv) //up to 15 args
         return 0;
     }
 
-
-
-    
     for(int i = 1; i < argc; i++) //going through our commannd line args
     {
-        char * hexStr = argv[i];
-        int len = strlen(argv[i]);
-        int base = 10; //if we need to tweak
+        //sscanf(argv[i], "%d", &list[i]);
+       
+        //grab the argvi
+        int numberVal = atoi(argv[i]); //parse the chars via ascii or would it be smart enough to know 0xf is hex
+        printf("hurrdurr %d\n", numberVal);
 
-        if(hexStr[0] == '0')
-        {
-            if((hexStr[1] == 'x') || (hexStr[1] == 'X'))
-            {
-                base = 16; 
-            } 
-        }
-        int value = strtol(hexStr, NULL, base); 
-        
-        //append value to an arraay        
+        //char * hexStr = argv[i];
+        //int len = strlen(argv[i]);
+        //for(int i = 0; i < len; i++)
+        //{
+        //    if(hexStr[0] == '0')
+        //    {
+        //        if((hexStr[1] == 'x') || (hexStr[1] == 'X'))
+        //        {
+        //            printf("hex!\n");
+        //        }
+        //    }
+        //}
+
+
+
+        //printf("%d: %d\n", i, list[i]);
     }
-
-
-    //printf("%d: %d\n", i, list[i]);
-
 
     menu menu;
     menu.count = funCount; 
@@ -101,7 +102,7 @@ int main(int argc, char ** argv) //up to 15 args
     //allocate an int array the argc size
     int * list = (int*) malloc(argc * sizeof(int));
 
-
+    
 
     //FIGURE OUT HOW TO PROPOERTLY CONSUM 69-80 
     //int funcMax = 1;  //this needs to be tweaked whenver we add fucntions into fdt

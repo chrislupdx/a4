@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 #define MAXARGS 15 //max command line args
 #define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
 #define funCount 2
@@ -23,6 +22,7 @@ char * choices[] =
     "Multiplication", "Division", "Modulo",
     "Reverse Input"
 };
+
 
 typedef void funcPtr(int * list); //what args go int?
 typedef struct 
@@ -55,40 +55,14 @@ int main(int argc, char ** argv) //up to 15 args
         printf("too few gtfo \n");
         return 0;
     }
-
-
-
-    
-    for(int i = 1; i < argc; i++) //going through our commannd line args
-    {
-        char * hexStr = argv[i];
-        int len = strlen(argv[i]);
-        int base = 10; //if we need to tweak
-
-        if(hexStr[0] == '0')
-        {
-            if((hexStr[1] == 'x') || (hexStr[1] == 'X'))
-            {
-                base = 16; 
-            } 
-        }
-        int value = strtol(hexStr, NULL, base); 
-        
-        //append value to an arraay        
-    }
-
-
-    //printf("%d: %d\n", i, list[i]);
-
-
     menu menu;
     menu.count = funCount; 
-    for (int i = 0; i < menu.count; i++) //wtf is this
+    for (int i = 0; i < menu.count; i++)
     {
         menu.items[i] = choices[i];
     }
 
-    //printmenu(&menu);
+    printmenu(&menu);
     int ui;
     printf("input: ");
     int fuck = scanf("%i", &ui);
@@ -98,10 +72,15 @@ int main(int argc, char ** argv) //up to 15 args
     }
     printf("invoking %d: %s\n", ui, fdt[ui].description);
 
-    //allocate an int array the argc size
-    int * list = (int*) malloc(argc * sizeof(int));
+    for(int i = 1; i < argc; i++)
+    {
+        printf("%s\n", argv[i]);
 
+        //if it starts with 0x 
+        //if it's a num cast it
 
+        sscanf(argv[i], "%d", %[i]);
+    }
 
     //FIGURE OUT HOW TO PROPOERTLY CONSUM 69-80 
     //int funcMax = 1;  //this needs to be tweaked whenver we add fucntions into fdt
@@ -116,7 +95,7 @@ int main(int argc, char ** argv) //up to 15 args
     //    (*fdt[i].name)(fList[i]); 
     //    free (fList[i]); 
     //}
-
+    
     return 0;
 }
 
