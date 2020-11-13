@@ -24,8 +24,8 @@ char * choices[] =
     "Multiplication", "Division", "Modulo",
     "Reverse Input"
 };
-int printmenu(menu * menu); 
 
+int printmenu(menu * menu); 
 
 //FDT
 typedef void funcPtr(funcParam fp); //what args go int?
@@ -34,23 +34,48 @@ typedef struct
     char * description;
     funcPtr * name; //this is a functin pointer
 } dtEntry;
+
 void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguement count)
 {
-    printf("addd\n");
+    printf("count is %d\n", fp.count);
+    //for(int i =0; i < fp.count; i++)
+    //{
+    //    printf("%i : %i\n", i, fp.params[i]);
+    //}
+    int sum = 0;
+    for(int i = 0; i < fp.count; i++)
+    {
+        printf("%d", fp.params[i]);
+        if(i != (fp.count - 1))
+        {
+        printf(" + ");
+        }
+        sum = sum + fp.params[i]; 
+    }
+    printf(" = %d ", sum);
+    printf("\n");
+    //2 + 1 = 20
+
+
+    //just print the other one later
+    //0x1 + 0x3 = 0x3
+    printf("add end\n");
     return;
 }
+
 void eexit(funcParam fp)
 {
     printf("goodbye\n");
     return;
 }
+
 dtEntry fdt[4] = 
 {
     {"exit", eexit},
     {"add", add},
 };
-int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
 
+int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
 
 int main(int argc, char ** argv) //up to 15 args
 {
@@ -65,15 +90,11 @@ int main(int argc, char ** argv) //up to 15 args
     funcParam fp;
     int args = argc -1;
     fp.params = (int*) malloc(argc * sizeof(args));
-
-
-
-    //int args[argc];
-    for(int i = 1; i < argc; i++)
+    int count = 0; 
+    for(int i = 1; i < argc; i++) //starting the count here at 1
     {
         char * hexStr = argv[i];
         int base = 10; //if we need to tweak
-
         if(hexStr[0] == '0')
         {
             if((hexStr[1] == 'x') || (hexStr[1] == 'X'))
@@ -82,13 +103,11 @@ int main(int argc, char ** argv) //up to 15 args
             } 
         }
         int value = strtol(hexStr, NULL, base); 
-        
-        //args[i] = value;
-        fp.params[i] = value;
-        printf("params %d is %d \n", i, fp.params[i]);
-        //printf("args %d is %d \n", i, args[i]);
+        fp.params[count] = value;
+        count++;
+        //printf("params %d is %d \n", i, fp.params[i]);
     }
-    //printf("%d: %d\n", i, list[i]);
+    fp.count = args;
 
     //Generate the Menu
     menu menu;
@@ -97,9 +116,8 @@ int main(int argc, char ** argv) //up to 15 args
     {
         menu.items[i] = choices[i];
     }
-    
+
     //Loop through this shit
-    
     printmenu(&menu);
     //Take UserInput
     int ui;
@@ -114,11 +132,8 @@ int main(int argc, char ** argv) //up to 15 args
     printf("invoking %d: %s\n", ui, fdt[ui].description);
     (*fdt[ui].name)(fp);
 
-
     //allocate an int array the argc size
     //int * list = (int*) malloc(argc * sizeof(int));
-
-
     //FIGURE OUT HOW TO PROPOERTLY CONSUM 69-80 
     //int funcMax = 1;  //this needs to be tweaked whenver we add fucntions into fdt
     //funcParam * fList[funcMax]; 
@@ -132,7 +147,6 @@ int main(int argc, char ** argv) //up to 15 args
     //    (*fdt[i].name)(fList[i]); 
     //    free (fList[i]); 
     //}
-
     return 0;
 }
 
