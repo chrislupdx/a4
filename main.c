@@ -6,12 +6,11 @@
 #define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
 #define funCount 2
 
-//typedef struct fParam  //lol what is this for
-//{
-//    int count;
-//    char *string; 
-//    char ** list; //2 dimensional array
-//} funcParam; //for one or is this general
+typedef struct fParam  //lol what is this for
+{
+    int count;
+    int * params;
+} funcParam; //for one or is this general
 
 //MENU
 typedef struct _menu
@@ -29,18 +28,18 @@ int printmenu(menu * menu);
 
 
 //FDT
-typedef void funcPtr(int * list); //what args go int?
+typedef void funcPtr(funcParam fp); //what args go int?
 typedef struct 
 {
     char * description;
     funcPtr * name; //this is a functin pointer
 } dtEntry;
-void add(int * inputL)
+void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguement count)
 {
     printf("addd\n");
     return;
 }
-void eexit(int * inputL)
+void eexit(funcParam fp)
 {
     printf("goodbye\n");
     return;
@@ -62,12 +61,17 @@ int main(int argc, char ** argv) //up to 15 args
         return 0;
     }
 
-    //Process Command Line Args
-    int args[argc];
+    //Process Command Line Argsa
+    funcParam fp;
+    int args = argc -1;
+    fp.params = (int*) malloc(argc * sizeof(args));
+
+
+
+    //int args[argc];
     for(int i = 1; i < argc; i++)
     {
         char * hexStr = argv[i];
-        //int len = strlen(argv[i]);
         int base = 10; //if we need to tweak
 
         if(hexStr[0] == '0')
@@ -79,22 +83,24 @@ int main(int argc, char ** argv) //up to 15 args
         }
         int value = strtol(hexStr, NULL, base); 
         
-        //append value to an arraay        
-        args[i] = value;
-        printf("args %d is %d \n", i, args[i]);
+        //args[i] = value;
+        fp.params[i] = value;
+        printf("params %d is %d \n", i, fp.params[i]);
+        //printf("args %d is %d \n", i, args[i]);
     }
     //printf("%d: %d\n", i, list[i]);
 
-    //Generate and Print the Menu
+    //Generate the Menu
     menu menu;
     menu.count = funCount; 
     for (int i = 0; i < menu.count; i++) //wtf is this
     {
         menu.items[i] = choices[i];
     }
-    //printmenu(&menu);
     
-
+    //Loop through this shit
+    
+    printmenu(&menu);
     //Take UserInput
     int ui;
     printf("input: ");
@@ -103,11 +109,14 @@ int main(int argc, char ** argv) //up to 15 args
     {
         printf("sure\n");
     }
+
+    //pass FDT UI+Data
     printf("invoking %d: %s\n", ui, fdt[ui].description);
+    (*fdt[ui].name)(fp);
+
 
     //allocate an int array the argc size
     //int * list = (int*) malloc(argc * sizeof(int));
-
 
 
     //FIGURE OUT HOW TO PROPOERTLY CONSUM 69-80 
