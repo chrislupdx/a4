@@ -69,7 +69,6 @@ void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguem
 
 void eexit(funcParam fp)
 {
-    printf("goodbye\n");
     return;
 }
 
@@ -122,35 +121,30 @@ int main(int argc, char ** argv) //up to 15 args
     }
 
     //Loop through this shit
+    //what style of loop would work 
+    int done = 0;
+    while(done == 0)
+    {
     printmenu(&menu);
     //Take UserInput
     int ui;
     printf("input: ");
-    int fuck = scanf("%i", &ui);
-    if(fuck < 0)
+    int yay = scanf("%i", &ui);
+    if(yay < 0)
     {
         printf("sure\n");
     }
-
+    
     //pass FDT UI+Data
     printf("invoking %d: %s\n", ui, fdt[ui].description);
     (*fdt[ui].name)(fp);
 
-    //allocate an int array the argc size
-    //int * list = (int*) malloc(argc * sizeof(int));
-    //FIGURE OUT HOW TO PROPOERTLY CONSUM 69-80 
-    //int funcMax = 1;  //this needs to be tweaked whenver we add fucntions into fdt
-    //funcParam * fList[funcMax]; 
-
-    //call every function in the fdt
-    //for(int i = 0; i < funcMax; i++)
-    //{
-    //    fList[i] = (funcParam * )malloc(sizeof(funcParam));   //allocate  funcparam sized mem and cast it to that type
-    //    fList[i]->count = i;
-    //    printf("Invoking %d: %s\n",i, fdt[i].description);
-    //    (*fdt[i].name)(fList[i]); 
-    //    free (fList[i]); 
-    //}
+    //if ui is 0 set done to 1
+    if(ui == 0)
+    {
+        done = 1;
+    }
+    };
     return 0;
 }
 
