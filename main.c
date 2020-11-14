@@ -4,7 +4,7 @@
 #include <ctype.h>
 #define MAXARGS 15 //max command line args
 #define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
-#define funCount 3
+#define funCount 4
 
 typedef struct fParam  //lol what is this for
 {
@@ -70,7 +70,6 @@ void subtract(funcParam fp)
 {
 
     int x = fp.params[0];
-   
     //dec
     for(int i = 0; i < fp.count; i++)
     {
@@ -95,11 +94,35 @@ void subtract(funcParam fp)
         x = x - fp.params[i];
     }
     printf(" = 0x%x\n", x);
+    return;
+}
 
+void mult(funcParam fp)
+{
+    int x = fp.params[0];
+    //dec
+    for(int i = 0; i < fp.count; i++)
+    {
+        printf("%d", fp.params[i]);
+        if(i !=(fp.count -1))
+        {
+            printf(" * ");
+        }
+        x = x * fp.params[i];
+    }
+    printf(" = %d ", x);
+    printf("\n");
 
-    //perform the computation
-    //
-
+    //hex
+    for(int i = 0; i < fp.count; i++)
+    {
+        printf("0x%x", fp.params[i]);
+        if(i != (fp.count -1))
+        {
+            printf(" * ");
+        }
+        x = x * fp.params[i];
+    }
     return;
 }
 
@@ -112,7 +135,8 @@ dtEntry fdt[4] =
 {
     {"exit", eexit},
     {"add", add},
-    {"subtract", subtract}
+    {"subtract", subtract},
+    {"multiplication", mult}
 };
 
 int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
