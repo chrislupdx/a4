@@ -70,7 +70,8 @@ void subtract(funcParam fp)
 {
 
     int x = fp.params[0];
-    //go from left to right 
+   
+    //dec
     for(int i = 0; i < fp.count; i++)
     {
         printf("%d", fp.params[i]);
@@ -83,7 +84,17 @@ void subtract(funcParam fp)
     printf(" = %d ", x);
     printf("\n");
 
-    //0th - 1th
+    //hex
+    for(int i = 0; i < fp.count; i++)
+    {
+        printf("0x%x", fp.params[i]);
+        if(i != (fp.count -1))
+        {
+            printf(" - ");
+        }
+        x = x - fp.params[i];
+    }
+    printf(" = 0x%x\n", x);
 
 
     //perform the computation
