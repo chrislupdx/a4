@@ -4,7 +4,7 @@
 #include <ctype.h>
 #define MAXARGS 15 //max command line args
 #define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
-#define funCount 2
+#define funCount 3
 
 typedef struct fParam  //lol what is this for
 {
@@ -44,7 +44,7 @@ void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguem
         printf("%d", fp.params[i]);
         if(i != (fp.count - 1))
         {
-        printf(" + ");
+            printf(" + ");
         }
         sum = sum + fp.params[i]; 
     }
@@ -63,6 +63,31 @@ void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguem
         sum1 = sum1 + fp.params[i];
     }
     printf(" = 0x%x\n", sum1);
+    return;
+}
+
+void subtract(funcParam fp)
+{
+
+    int x = fp.params[0];
+    //go from left to right 
+    for(int i = 0; i < fp.count; i++)
+    {
+        printf("%d", fp.params[i]);
+        if(i !=(fp.count -1))
+        {
+            printf(" - ");
+        }
+        x = x - fp.params[i];
+    }
+    printf(" = %d ", x);
+    printf("\n");
+
+    //0th - 1th
+
+
+    //perform the computation
+    //
 
     return;
 }
@@ -76,6 +101,7 @@ dtEntry fdt[4] =
 {
     {"exit", eexit},
     {"add", add},
+    {"subtract", subtract}
 };
 
 int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
@@ -125,25 +151,25 @@ int main(int argc, char ** argv) //up to 15 args
     int done = 0;
     while(done == 0)
     {
-    printmenu(&menu);
-    //Take UserInput
-    int ui;
-    printf("input: ");
-    int yay = scanf("%i", &ui);
-    if(yay < 0)
-    {
-        printf("sure\n");
-    }
-    
-    //pass FDT UI+Data
-    printf("invoking %d: %s\n", ui, fdt[ui].description);
-    (*fdt[ui].name)(fp);
+        printmenu(&menu);
+        //Take UserInput
+        int ui;
+        printf("input: ");
+        int yay = scanf("%i", &ui);
+        if(yay < 0)
+        {
+            printf("sure\n");
+        }
 
-    //if ui is 0 set done to 1
-    if(ui == 0)
-    {
-        done = 1;
-    }
+        //pass FDT UI+Data
+        printf("invoking %d: %s\n", ui, fdt[ui].description);
+        (*fdt[ui].name)(fp);
+
+        //if ui is 0 set done to 1
+        if(ui == 0)
+        {
+            done = 1;
+        }
     };
     return 0;
 }
