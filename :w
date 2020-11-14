@@ -129,11 +129,14 @@ void mult(funcParam fp)
 //only divide
 void division(funcParam fp)
 {
-    long first = fp.params[0];
-    long second = fp.params[1];
-    long res = first / second; //but fractions bitch
-    printf("%ld / %ld = %ld\n", first, second, res); 
-    printf("0x%lx / 0x%lx = 0x%lx\n", first, second, res);
+    int first = fp.params[0];
+    int second = fp.params[1];
+    int res = first / second; //but fractions bitch
+    printf("%f / %f = %f\n", first, second, res); 
+    printf("0x%x / 0x%x = 0x%x\n", first, second, res);
+    //divide the first two numbers
+    //res = first / second
+    //make it floatint point friendly
     return;
 }
 
