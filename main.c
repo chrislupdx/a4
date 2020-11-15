@@ -85,29 +85,16 @@ void subtract(funcParam fp)
 void mult(funcParam fp)
 {
     int x = fp.params[0];
-    //dec
-    for(int i = 0; i < fp.count; i++)
+    printf("%d", x); 
+    for(int i = 1; i < fp.count; i++)
     {
+        printf(" * ");
         printf("%d", fp.params[i]);
-        if(i !=(fp.count -1))
-        {
-            printf(" * ");
-        }
-        x = x * fp.params[i];
+        int res = x * fp.params[i];
+        x = res;
     }
     printf(" = %d ", x);
     printf("\n");
-
-    //hex
-    for(int i = 0; i < fp.count; i++)
-    {
-        printf("0x%x", fp.params[i]);
-        if(i != (fp.count -1))
-        {
-            printf(" * ");
-        }
-        x = x * fp.params[i];
-    }
     return;
 }
 
