@@ -4,7 +4,7 @@
 #include <ctype.h>
 #define MAXARGS 15 //max command line args
 #define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
-#define funCount 6
+#define funCount 7
 
 typedef struct fParam  //lol what is this for
 {
@@ -53,47 +53,32 @@ void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguem
 
     int sum1 = 0;
     //Hex
-    for(int i = 0; i < fp.count; i++)
-    {
-        printf("0x%x", fp.params[i]);
-        if(i != (fp.count -1))
-        {
-            printf(" + ");
-        }
-        sum1 = sum1 + fp.params[i];
-    }
-    printf(" = 0x%x\n", sum1);
+    //for(int i = 0; i < fp.count; i++)
+    //{
+    //    printf("0x%x", fp.params[i]);
+    //    if(i != (fp.count -1))
+    //    {
+    //        printf(" + ");
+    //    }
+    //    sum1 = sum1 + fp.params[i];
+    //}
+    //printf(" = 0x%x\n", sum1);
     return;
 }
 
 void subtract(funcParam fp)
 {
-
     int x = fp.params[0];
-    //dec
-    for(int i = 0; i < fp.count; i++)
+    printf("%d", x);
+    for(int i = 1; i < fp.count; i++)
     {
+        printf(" - ");
         printf("%d", fp.params[i]);
-        if(i !=(fp.count -1))
-        {
-            printf(" - ");
-        }
-        x = x - fp.params[i];
+        int res = x - fp.params[i];
+        x = res;
     }
     printf(" = %d ", x);
     printf("\n");
-
-    //hex
-    for(int i = 0; i < fp.count; i++)
-    {
-        printf("0x%x", fp.params[i]);
-        if(i != (fp.count -1))
-        {
-            printf(" - ");
-        }
-        x = x - fp.params[i];
-    }
-    printf(" = 0x%x\n", x);
     return;
 }
 
@@ -146,19 +131,45 @@ void modulo(funcParam fp)
     return;
 }
 
+void reverse(funcParam fp)
+{
+    //since the reverse is literal we can
+        //1. produce an alternate source
+        //2. 
+
+    char print[fp.count];
+    int counter = fp.count;
+    //print out the command line args in reverse
+    for(int i = 0; i < fp.count; i++)
+    {
+        printf("%d", fp.params[i]);
+        //print[counter] = fp.params[i]; 
+    }
+
+    //for(int i = 0; i < fp.count; i++)
+    //{
+    //    //printf("%d", print[i]);
+    //}
+
+    //copy  contents in reverse into print
+
+    return;
+}
+
 void eexit(funcParam fp)
 {
     return;
 }
 
-dtEntry fdt[6] = 
+dtEntry fdt[7] = 
 {
     {"exit", eexit},
     {"add", add},
     {"subtract", subtract},
     {"multiplication", mult},
     {"division", division},
-    {"modulo", modulo}
+    {"modulo", modulo},
+    {"reverse", reverse}
 };
 
 int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
