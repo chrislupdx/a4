@@ -4,7 +4,7 @@
 #include <ctype.h>
 #define MAXARGS 15 //max command line args
 #define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
-#define funCount 5
+#define funCount 6
 
 typedef struct fParam  //lol what is this for
 {
@@ -137,18 +137,28 @@ void division(funcParam fp)
     return;
 }
 
+void modulo(funcParam fp)
+{
+    int first = fp.params[0];
+    int second = fp.params[1];
+    int res  = first % second;
+    printf("%d %c %d = %d\n", first, 37, second, res);
+    return;
+}
+
 void eexit(funcParam fp)
 {
     return;
 }
 
-dtEntry fdt[5] = 
+dtEntry fdt[6] = 
 {
     {"exit", eexit},
     {"add", add},
     {"subtract", subtract},
     {"multiplication", mult},
-    {"division", division}
+    {"division", division},
+    {"modulo", modulo}
 };
 
 int fdtCount = sizeof(fdt) / sizeof(fdt[0]);
