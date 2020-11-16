@@ -114,7 +114,7 @@ void reverse(int argc, char ** argv)
         int leng = strlen(argv[i]);
         for(int x = leng; x >= 0; x--)
         {
-        printf("%c", argv[i][x]);
+            printf("%c", argv[i][x]);
         }
         printf(" ");
     }
@@ -187,11 +187,24 @@ int main(int argc, char ** argv) //up to 15 args
         printmenu(&menu);
         //Take UserInput
         int ui;
-        printf("input: ");
-        int yay = scanf("%i", &ui);
-        if(yay < 0)
+        int good = 0;
+        while(!good)
         {
-            printf("sure\n");
+            printf("input: ");
+            int yay = scanf("%i", &ui);
+            if(yay < 0)
+            {
+                printf("sure\n");
+            }
+            if((ui > 6) || (ui < 0))
+            {
+                printf("Bad Input: go again \n");
+                printmenu(&menu);
+            }
+            else
+            {
+                good = 1;
+            }
         }
 
         //pass FDT UI+Data
