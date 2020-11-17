@@ -6,13 +6,12 @@
 #define min(a, b) ((a) < (b) ? (a) :(b)) //if true a, else 
 #define funCount 7
 
-typedef struct fParam  //lol what is this for
+typedef struct fParam
 {
     int count;
-    int * params; //this is a list of command line arguements cleand out for calculator consumption
-} funcParam; //for one or is this general
+    int * params; 
+} funcParam;
 
-//MENU
 typedef struct _menu
 {
     int count;
@@ -29,17 +28,16 @@ char * choices[] =
 int printmenu(menu * menu); 
 
 //FDT
-typedef void funcPtr(); //what args go int?
+typedef void funcPtr(); 
 typedef struct 
 {
     char * description;
-    funcPtr * name; //this is a functin pointer
+    funcPtr * name; //function pointer
 } dtEntry;
 
-void add(funcParam fp) //is a struct absolutely necessary (list of vals + arguement count)
+void add(funcParam fp)
 {
     int sum = 0;
-    //Decimal
     for(int i = 0; i < fp.count; i++)
     {
         printf("%d", fp.params[i]);
@@ -86,14 +84,13 @@ void mult(funcParam fp)
     return;
 }
 
-//only divide
 void division(funcParam fp)
 {
     int first = fp.params[0];
     int second = fp.params[1];
-    double res =((double) first) / second; //but fractions bitch
+    double res =((double) first) / second; 
     printf("%d / %d = %f\n", first, second, res); 
-    printf("0x%x / 0x%x = 0x%f\n", first, second, res);
+    //printf("0x%x / 0x%x = 0x%f\n", first, second, res);
     return;
 }
 
@@ -106,7 +103,6 @@ void modulo(funcParam fp)
     return;
 }
 
-//1. shove it into a struct :(( 2. put it into arguement
 void reverse(int argc, char ** argv)
 {
     for(int i = (argc - 1); i >= 1; i--)
@@ -144,7 +140,12 @@ int main(int argc, char ** argv) //up to 15 args
     //Guard for no command line args
     if(argc == 1)
     {
-        printf("too few gtfo \n");
+        printf("too few arguements\n");
+        return 0;
+    }
+    if(argc > 15)
+    {
+        printf("too many arguements\n");
         return 0;
     }
 
@@ -158,7 +159,6 @@ int main(int argc, char ** argv) //up to 15 args
     {
         char * hexStr = argv[i];
         int base = 10; //if we need to tweak
-
         if(hexStr[0] == '0')
         {
             if((hexStr[1] == 'x') || (hexStr[1] == 'X'))
@@ -169,7 +169,6 @@ int main(int argc, char ** argv) //up to 15 args
         int value = strtol(hexStr, NULL, base); 
         fp.params[count] = value;
         count++;
-        //printf("params %d is %d \n", i, fp.params[i]);
     }
     fp.count = args;
 
@@ -185,6 +184,7 @@ int main(int argc, char ** argv) //up to 15 args
     while(done == 0)
     {
         printmenu(&menu);
+
         //Take UserInput
         int ui;
         int good = 0;
@@ -207,11 +207,8 @@ int main(int argc, char ** argv) //up to 15 args
             }
         }
 
-        //pass FDT UI+Data
         printf("invoking %d: %s\n", ui, fdt[ui].description);
-
-        //if erecerse, pass it 
-        if(ui == 6)
+        if(ui == 6) //if reverse, feed it command line 
         {
             (*fdt[ui].name)(argc, argv);
         }
@@ -220,8 +217,7 @@ int main(int argc, char ** argv) //up to 15 args
             (*fdt[ui].name)(fp);
         }
 
-        //if ui is 0 set done to 1
-        if(ui == 0)
+        if(ui == 0) //Exit 
         {
             done = 1;
         }
@@ -233,7 +229,7 @@ int main(int argc, char ** argv) //up to 15 args
 int printmenu(menu * menu)
 {
     printf("\n");
-    for(int i = 0; i < menu->count; i++) //menu count is currently set to 1 
+    for(int i = 0; i < menu->count; i++)
     {
         printf("%d. %s\n", i, menu->items[i]);
     }
